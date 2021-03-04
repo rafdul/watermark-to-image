@@ -93,9 +93,8 @@ const makeWatermark = async function(inputFile) {
     }]);
     optionsWatermark.watermarkText = text.value;
     addTextWatermarkToImage('./img/'+ inputFile, `./img/${makeNameImg(inputFile)}`, optionsWatermark.watermarkText);
-    console.log('inputFile', inputFile)
     
-    checkFolder();
+    checkFolderAndRemoveFile();
   }
   else {
     const image = await inquirer.prompt([{
@@ -111,7 +110,7 @@ const makeWatermark = async function(inputFile) {
     }
     addImageWatermarkToImage('./img/' + inputFile, `./img/${makeNameImg(inputFile)}`, './img/' + optionsWatermark.watermarkImage);
     
-    checkFolder();
+    checkFolderAndRemoveFile();
   }
 }
 
@@ -150,11 +149,11 @@ const makeImageInvert = async function(inputFile, outputImage) {
   makeWatermark(inputFile.inputImage);
 }
 
-const checkFolder= () => {
+const checkFolderAndRemoveFile = () => {
   const items = fs.readdirSync('./img/');
   for (let item of items) {
     if(item.indexOf('-edit.') > 0) {
-      console.log('do usunięcia', item);
+      // console.log('do usunięcia', item);
       fs.rmSync('./img/' + item);
     }
   }
